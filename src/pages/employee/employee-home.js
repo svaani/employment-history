@@ -38,7 +38,7 @@ const EmployeeHome = () => {
         let companyVal = EmploymentHistory.getCompany(employee);
       
         let newCompany = companyList.find((company)=>{
-            return Company.getId(company);
+            return Company.getId(company) == companyVal;
         });
         return newCompany!= null ? Company.getName(newCompany) : companyVal;
     }
