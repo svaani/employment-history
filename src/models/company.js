@@ -14,8 +14,13 @@ class Company {
         return this.UserObj.get();
     }
 
-    byUserId = (userId)=>{
-        this.UserObj = this.UserObj.where("U_Uid", '==', userId);
+    byOwned = (userId)=>{
+        this.UserObj = this.UserObj.where("OwnedBy", '==', userId);
+        return this;
+    }
+
+    byId = (userId)=>{
+        this.UserObj = this.UserObj.where("C_Uid", '==', userId);
         return this;
     }
 

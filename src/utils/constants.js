@@ -5,6 +5,7 @@ const Constants = {
         "LOGIN" : "Login",
         "WELCOME" : "Welcome",
         "EMPLOYEE_HOME" : "Employee View",
+        "ADMIN_HOME" : "Admin View",
         "ADD_RECORD" : "Add Employment Record"
     },
 

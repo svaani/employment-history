@@ -1,6 +1,7 @@
 import React, { Fragment, useLayoutEffect, useState } from 'react';
 import { Grid, Button, CssBaseline, List, ListItem, ListItemText, Typography, Divider } from '@material-ui/core';
 import { Redirect, useHistory } from 'react-router';
+import Company from '../../models/company';
 
 import EmploymentHistory from '../../models/employmentHistory';
 
@@ -12,6 +13,8 @@ import LoginStore from '../../redux-mock/login-store';
 const EmployeeHome = () => {
 
     const [employeeHistory, setEmployeeHistory] = useState(null);
+    const [companyList, setCompanyList] = useState([]);
+
     const history = useHistory();
 
     //componentWillMount
@@ -22,7 +25,23 @@ const EmployeeHome = () => {
             .then((listSnapshot) => {
                 setEmployeeHistory(listSnapshot.docs);
             });
+
+        new Company()
+            .byOwned(LoginStore.get("user")["userId"])
+            .get()
+            .then((listSnapshot) => {
+                setCompanyList(listSnapshot.docs);
+            });
     }, []);
+
+    const _getCompanyName = (employee) => {
+        let companyVal = EmploymentHistory.getCompany(employee);
+      
+        let newCompany = companyList.find((company)=>{
+            return Company.getId(company);
+        });
+        return newCompany!= null ? Company.getName(newCompany) : companyVal;
+    }
 
     return (<Fragment>
         <CssBaseline />
@@ -58,7 +77,7 @@ const EmployeeHome = () => {
                                     </Grid>
                                     <Grid item>    Role  <ListItemText primary={EmploymentHistory.getRole(employee)} />
                                     </Grid>
-                                    <Grid item>    Company  <ListItemText primary={EmploymentHistory.getCompany(employee)} />
+                                    <Grid item>    Company  <ListItemText primary={_getCompanyName(employee)} />
                                     </Grid>
                                 </Grid>
                             </Grid>
