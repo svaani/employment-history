@@ -1,7 +1,7 @@
 import React,{Fragment} from 'react';
 
 
-const AdminHome ()=>{
+const AdminHome = ()=>{
     return (<Fragment>AdminHome</Fragment>);
 }
 

@@ -1,22 +1,37 @@
-import React from 'react';
+import React, {useState } from 'react';
+import { Redirect,useHistory } from 'react-router';
 import { AppBar, Button, IconButton, Typography, Toolbar } from '@material-ui/core';
 
 import Constants from './constants';
 
-const AppBarCustom = (props) => {
-    return <AppBar position="static">
-        <Toolbar>{/**to use route redirect insted location href-todo */}
+import LoginStore from '../redux-mock/login-store';
 
-            <Typography style={{ "width": "90%" }} variant="h6" color="inherit">
-                |    {props.title}
-            </Typography>
-            <Button style={{ "display": "inline-block" }}
-                onClick={() => { localStorage.removeItem("userId"); window.location.reload() }}
-                color="inherit">
-                Logout
+const AppBarCustom = (props) => {
+
+    const [loginStatus, setLoginStatus] = useState(LoginStore.get("user") == null || LoginStore.get("user")["userId"] == null);
+    const history = useHistory();
+
+    const _logout = () => {
+        LoginStore.set({});
+        setLoginStatus(false);
+        history.push("/login");
+    }
+
+    if (loginStatus) {
+        return <Redirect to="/login" />;
+    } else
+        return <AppBar position="static">
+            <Toolbar>
+                <Typography style={{ "width": "90%" }} variant="h6" color="inherit">
+                       {props.title}
+                </Typography>
+                <Button style={{ "display": "inline-block" }}
+                    onClick={ _logout}
+                    color="inherit">
+                    Logout
             </Button>
-        </Toolbar>
-    </AppBar>;
+            </Toolbar>
+        </AppBar>;
 }
 
 export default AppBarCustom;

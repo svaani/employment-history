@@ -1,7 +1,7 @@
 import React,{Fragment} from 'react';
 
 
-const CompanyView ()=>{
+const CompanyView= ()=>{
     return (<Fragment>CompanyView</Fragment>);
 }
 

@@ -1,0 +1,1 @@
+(() => { window.INIT_REDUX_MOCK = {}; })();
